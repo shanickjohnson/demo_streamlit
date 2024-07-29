@@ -27,31 +27,36 @@ def main():
     # Title of the web app
     st.title("Simple Chatbot")
 
-    # Chat history
-    if 'messages' not in st.session_state:
-        st.session_state.messages = []
+    # Chat history container
+    chat_container = st.container()
+    with chat_container:
+        # Display chat history
+        if 'messages' not in st.session_state:
+            st.session_state.messages = []
+        
+        for message in st.session_state.messages:
+            if message["role"] == "user":
+                st.text(f"You: {message['content']}", key=message["content"])
+            elif message["role"] == "bot":
+                st.text(f"Bot: {message['content']}", key=message["content"])
 
-    # User input
-    user_input = st.text_input("You:", "")
+    # Input bar container
+    input_container = st.container()
+    with input_container:
+        st.write("")  # Add space between chat history and input bar
+        user_input = st.text_input("You:", "", key="input_text")
 
-    if st.button("Send") or user_input:
-        if user_input:
-            # Append user message
-            st.session_state.messages.append({"role": "user", "content": user_input})
+        if st.button("Send") or user_input:
+            if user_input:
+                # Append user message
+                st.session_state.messages.append({"role": "user", "content": user_input})
 
-            # Get chatbot response
-            bot_response = chatbot_response(user_input)
-            st.session_state.messages.append({"role": "bot", "content": bot_response})
+                # Get chatbot response
+                bot_response = chatbot_response(user_input)
+                st.session_state.messages.append({"role": "bot", "content": bot_response})
 
-            # Clear the input field
-            st.text_input("You:", "", key="new_input")
-
-    # Display chat history
-    for message in st.session_state.messages:
-        if message["role"] == "user":
-            st.text(f"You: {message['content']}", key=message["content"])
-        elif message["role"] == "bot":
-            st.text(f"Bot: {message['content']}", key=message["content"])
+                # Clear the input field
+                st.text_input("You:", "", key="new_input")
 
 if __name__ == "__main__":
     main()
