@@ -28,6 +28,29 @@ h1, h2, h3, h4, h5, h6, p {
     border-radius: 8px;
     background-color: #00509e; /* Lighter blue for chat container */
 }
+.input-container {
+    background-color: #ff69b4; /* Pink background color for chat input area */
+    padding: 10px;
+    border-radius: 8px;
+}
+.input-container input {
+    width: calc(100% - 110px); /* Adjust input field width */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+}
+.input-container button {
+    width: 100px;
+    background-color: #ffffff; /* White button background */
+    color: #ff69b4; /* Pink button text */
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+}
+.input-container button:hover {
+    background-color: #ff85c0; /* Lighter pink on hover */
+}
 .footer {
     position: fixed;
     bottom: 0;
@@ -63,9 +86,25 @@ def add_message(user_input, response):
     st.session_state.messages.append(f"**You:** {user_input}")
     st.session_state.messages.append(f"**MediCore:** {response}")
 
-# User input
-user_input = st.text_input("Your message here:", key="input")
+# Display the chat history
+with chat_history.container():
+    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+    for message in st.session_state.messages:
+        st.write(message)
+    st.markdown('</div>', unsafe_allow_html=True)
 
+# Chat input area with pink background
+st.markdown("""
+<div class="input-container">
+    <form action="#" method="post">
+        <input type="text" id="user_input" name="user_input" placeholder="Your message here:" />
+        <button type="submit">Send</button>
+    </form>
+</div>
+""", unsafe_allow_html=True)
+
+# Handle form submission
+user_input = st.text_input("Your message here:", key="input")
 if st.button('Send'):
     if user_input:
         # For demonstration purposes, we use a simple echo response
@@ -73,13 +112,6 @@ if st.button('Send'):
         add_message(user_input, response)
     else:
         st.warning("Please enter a message before sending.")
-
-# Display the chat history
-with chat_history.container():
-    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-    for message in st.session_state.messages:
-        st.write(message)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown(
