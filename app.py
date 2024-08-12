@@ -1,60 +1,38 @@
 import streamlit as st
 
-# Streamlit Page Configuration
-st.set_page_config(
-    page_title="Streamly - An Intelligent Streamlit Assistant",
-    page_icon="imgs/avatar_streamly.png",
-    layout="wide",
-    initial_sidebar_state="auto",
-    menu_items={
-        "Get help": "https://github.com/AdieLaine/Streamly",
-        "Report a bug": "https://github.com/AdieLaine/Streamly",
-        "About": """
-            ## Streamly Streamlit Assistant
-            ### Powered using GPT-4o-mini
+# Set the page configuration
+st.set_page_config(page_title="Chatbot", page_icon="🤖")
 
-            **GitHub**: https://github.com/AdieLaine/
-
-            The AI Assistant named, Streamly, aims to provide the latest updates from Streamlit,
-            generate code snippets for Streamlit widgets,
-            and answer questions about Streamlit's latest features, issues, and more.
-            Streamly has been trained on the latest Streamlit updates and documentation.
-        """
+# Custom CSS to style the background color
+st.markdown(
+    """
+    <style>
+    .reportview-container {
+        background-color: #E0F7FA; /* Light blue background */
     }
+    .sidebar .sidebar-content {
+        background-color: #E0F7FA; /* Light blue background */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
-# Streamlit Title
-st.title("Streamly Streamlit Assistant")
+# Function to simulate chatbot responses
+def get_bot_response(user_input):
+    # This is where you can implement a more sophisticated chatbot logic
+    # For now, it just echoes the user input
+    return f"You said: {user_input}"
 
-def main():
-    """
-    Display Streamlit updates and handle the chat interface.
-    """
-    # Insert custom CSS for glowing effect
-    st.markdown(
-        """
-        <style>
-        .cover-glow {
-            width: 100%;
-            height: auto;
-            padding: 3px;
-            box-shadow: 
-                0 0 5px #330000,
-                0 0 10px #660000,
-                0 0 15px #990000,
-                0 0 20px #CC0000,
-                0 0 25px #FF0000,
-                0 0 30px #FF3333,
-                0 0 35px #FF6666;
-            position: relative;
-            z-index: -1;
-            border-radius: 45px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+# Streamlit app layout
+st.title("Simple Chatbot")
 
+# Text input for user messages
+user_input = st.text_input("You:", "")
 
-if __name__ == "__main__":
-    main()
+# Display chat history
+if user_input:
+    response = get_bot_response(user_input)
+    st.write(f"**Chatbot:** {response}")
+
+# Note: For a more interactive chat, you might use session state to manage chat history
