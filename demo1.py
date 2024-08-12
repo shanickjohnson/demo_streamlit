@@ -44,7 +44,7 @@ st.markdown(
         left: 336px; /* Adjust this value to match the width of your sidebar */
         width: calc(100% - 336px); /* Adjust this value to match the width of your sidebar */
         text-align: center; /* Center text within the available width */
-        color: grey;
+        color: blue;
         padding: 10px;
         box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         background: white; /* Ensure footer background is white to match the page background */
