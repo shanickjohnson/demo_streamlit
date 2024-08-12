@@ -6,7 +6,7 @@ st.set_page_config(page_title="MediCore - Empathetic Mental Health Companion", l
 st.markdown("""
 <style>
 body {
-    background-color: white;
+    background-color: blue;
 }
 </style>
 """, unsafe_allow_html=True)
