@@ -1,62 +1,60 @@
 import streamlit as st
 
-# Simple chatbot logic
-def chatbot_response(user_input):
-    user_input = user_input.lower()
-    
-    responses = {
-        "hi": "Hello! How can I help you today?",
-        "hello": "Hi there! What can I do for you?",
-        "how are you": "I'm just a bot, but I'm doing great! How can I assist you?",
-        "bye": "Goodbye! Have a great day!",
+# Streamlit Page Configuration
+st.set_page_config(
+    page_title="Streamly - An Intelligent Streamlit Assistant",
+    page_icon="imgs/avatar_streamly.png",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items={
+        "Get help": "https://github.com/AdieLaine/Streamly",
+        "Report a bug": "https://github.com/AdieLaine/Streamly",
+        "About": """
+            ## Streamly Streamlit Assistant
+            ### Powered using GPT-4o-mini
+
+            **GitHub**: https://github.com/AdieLaine/
+
+            The AI Assistant named, Streamly, aims to provide the latest updates from Streamlit,
+            generate code snippets for Streamlit widgets,
+            and answer questions about Streamlit's latest features, issues, and more.
+            Streamly has been trained on the latest Streamlit updates and documentation.
+        """
     }
-    
-    return responses.get(user_input, "Sorry, I don't understand that.")
+)
+
+# Streamlit Title
+st.title("Streamly Streamlit Assistant")
 
 def main():
-    # Sidebar for user settings
-    st.sidebar.title("Settings")
-    st.sidebar.write("You can customize the bot's behavior here.")
-    
-    # Optional: Add a selection box to the sidebar
-    bot_mode = st.sidebar.selectbox("Select bot mode", ["Standard", "Friendly", "Formal"])
-    
-    # Display selected bot mode
-    st.sidebar.write(f"Bot mode is set to: {bot_mode}")
+    """
+    Display Streamlit updates and handle the chat interface.
+    """
+    # Insert custom CSS for glowing effect
+    st.markdown(
+        """
+        <style>
+        .cover-glow {
+            width: 100%;
+            height: auto;
+            padding: 3px;
+            box-shadow: 
+                0 0 5px #330000,
+                0 0 10px #660000,
+                0 0 15px #990000,
+                0 0 20px #CC0000,
+                0 0 25px #FF0000,
+                0 0 30px #FF3333,
+                0 0 35px #FF6666;
+            position: relative;
+            z-index: -1;
+            border-radius: 45px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    # Title of the web app
-    st.title("Simple Chatbot")
-
-    # Chat history container
-    chat_container = st.container()
-    with chat_container:
-        # Display chat history
-        if 'messages' not in st.session_state:
-            st.session_state.messages = []
-        
-        for message in st.session_state.messages:
-            if message["role"] == "user":
-                st.text(f"You: {message['content']}", key=message["content"])
-            elif message["role"] == "bot":
-                st.text(f"Bot: {message['content']}", key=message["content"])
-
-    # Input bar container
-    input_container = st.container()
-    with input_container:
-        st.write("")  # Add space between chat history and input bar
-        user_input = st.text_input("You:", "", key="input_text")
-
-        if st.button("Send") or user_input:
-            if user_input:
-                # Append user message
-                st.session_state.messages.append({"role": "user", "content": user_input})
-
-                # Get chatbot response
-                bot_response = chatbot_response(user_input)
-                st.session_state.messages.append({"role": "bot", "content": bot_response})
-
-                # Clear the input field
-                st.text_input("You:", "", key="new_input")
 
 if __name__ == "__main__":
     main()
