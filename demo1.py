@@ -3,13 +3,33 @@ import streamlit as st
 # Streamlit layout
 st.set_page_config(page_title="MediCore - Empathetic Mental Health Companion", layout="wide")
 
+# Apply custom styles
 st.markdown("""
 <style>
 body {
-    background-color: blue;
+    background-color: #003366; /* Dark blue background color */
+    color: #ffffff; /* White text color for better contrast */
+}
+.sidebar .sidebar-content {
+    background-color: #00509e; /* Lighter blue for the sidebar */
+}
+h1, h2, h3, h4, h5, h6, p {
+    color: #ffffff; /* Ensure text is visible on dark background */
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #003366;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    background: #ffffff; /* White background for the footer */
 }
 </style>
 """, unsafe_allow_html=True)
+
 # Sidebar for mood checkboxes
 st.sidebar.title("How do you feel today?")
 feeling_anxious = st.sidebar.checkbox("Feeling Anxious")
@@ -24,32 +44,29 @@ st.title("MediCore")
 chat_history = st.empty()
 
 # Placeholder for chat history
-messages = []
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
+
+def add_message(user_input, response):
+    st.session_state.messages.append(f"**You:** {user_input}")
+    st.session_state.messages.append(f"**MediCore:** {response}")
 
 # User input
-user_input = st.chat_input("")
+user_input = st.text_input("Your message here:")
+
+if user_input:
+    # For demonstration purposes, we use a simple echo response
+    response = f"I hear you saying: '{user_input}'"
+    add_message(user_input, response)
 
 # Display the chat history
 with chat_history.container():
-    for message in messages:
+    for message in st.session_state.messages:
         st.write(message)
 
 # Footer
 st.markdown(
     """
-    <style>
-    .footer {
-        position: fixed;
-        bottom: 0;
-        left: 336px; /* Adjust this value to match the width of your sidebar */
-        width: calc(100% - 336px); /* Adjust this value to match the width of your sidebar */
-        text-align: center; /* Center text within the available width */
-        color: blue;
-        padding: 10px;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-        background: white; /* Ensure footer background is white to match the page background */
-    }
-    </style>
     <div class="footer">
         Created by the Innovative Sparks. This chatbot does not replace human interaction. Seek help from nearby facilities.
     </div>
