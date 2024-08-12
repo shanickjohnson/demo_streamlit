@@ -13,7 +13,12 @@ body {
     padding: 0;
 }
 .sidebar .sidebar-content {
-    background-color: #00509e; /* Lighter blue for the sidebar */
+    background-color: #003366; /* Dark blue for the sidebar */
+    color: #ffffff; /* White text color for sidebar content */
+}
+.sidebar .sidebar-header {
+    background-color: #003366; /* Ensure the header of the sidebar is the same color */
+    color: #ffffff; /* White text color for the sidebar header */
 }
 h1, h2, h3, h4, h5, h6, p {
     color: #ffffff; /* Ensure text is visible on dark background */
@@ -21,7 +26,7 @@ h1, h2, h3, h4, h5, h6, p {
 .chat-container {
     padding: 20px;
     border-radius: 8px;
-    background-color: #00509e; /* Ensure chat container background is visible */
+    background-color: #00509e; /* Lighter blue for chat container */
 }
 .footer {
     position: fixed;
@@ -66,8 +71,6 @@ if st.button('Send'):
         # For demonstration purposes, we use a simple echo response
         response = f"I hear you saying: '{user_input}'"
         add_message(user_input, response)
-        st.session_state.messages.append(f"**You:** {user_input}")
-        st.session_state.messages.append(f"**MediCore:** {response}")
     else:
         st.warning("Please enter a message before sending.")
 
