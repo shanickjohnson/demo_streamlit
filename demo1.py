@@ -9,12 +9,19 @@ st.markdown("""
 body {
     background-color: #003366; /* Dark blue background color */
     color: #ffffff; /* White text color for better contrast */
+    margin: 0;
+    padding: 0;
 }
 .sidebar .sidebar-content {
     background-color: #00509e; /* Lighter blue for the sidebar */
 }
 h1, h2, h3, h4, h5, h6, p {
     color: #ffffff; /* Ensure text is visible on dark background */
+}
+.chat-container {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #00509e; /* Ensure chat container background is visible */
 }
 .footer {
     position: fixed;
@@ -52,17 +59,24 @@ def add_message(user_input, response):
     st.session_state.messages.append(f"**MediCore:** {response}")
 
 # User input
-user_input = st.text_input("Your message here:")
+user_input = st.text_input("Your message here:", key="input")
 
-if user_input:
-    # For demonstration purposes, we use a simple echo response
-    response = f"I hear you saying: '{user_input}'"
-    add_message(user_input, response)
+if st.button('Send'):
+    if user_input:
+        # For demonstration purposes, we use a simple echo response
+        response = f"I hear you saying: '{user_input}'"
+        add_message(user_input, response)
+        st.session_state.messages.append(f"**You:** {user_input}")
+        st.session_state.messages.append(f"**MediCore:** {response}")
+    else:
+        st.warning("Please enter a message before sending.")
 
 # Display the chat history
 with chat_history.container():
+    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     for message in st.session_state.messages:
         st.write(message)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown(
